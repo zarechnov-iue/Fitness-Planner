@@ -1,7 +1,9 @@
 from enum import Enum
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel
+
+from .exercises import ExerciseResponse
 
 
 class WorkoutType(str, Enum):
@@ -25,6 +27,7 @@ class WorkoutResponse(WorkoutBase):
     id: int
     user_id: int
     created_at: Optional[str]
+    exercises: List[ExerciseResponse] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
