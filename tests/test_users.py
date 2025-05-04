@@ -1,15 +1,8 @@
-import os
-import sys
-
 import faker
 from fastapi.testclient import TestClient
 
 from fixture import registered_user, client
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-# Импортируем из проекта
-import schemas
+from schemas.users import UserExperience, UserGoal
 
 fake = faker.Faker()
 
@@ -21,8 +14,8 @@ def test_create_user(client: TestClient, registered_user):
         "name": fake.last_name(),
         "email": fake.email(),
         "password": fake.password(),
-        "experience_level": fake.enum(schemas.UserExperience),
-        "goal": fake.enum(schemas.UserGoal)
+        "experience_level": fake.enum(UserExperience),
+        "goal": fake.enum(UserGoal)
     }
 
     response = client.post("/users", json=payload)
@@ -76,8 +69,8 @@ def test_update_user(client: TestClient, registered_user):
         "name": fake.last_name(),
         "email": fake.email(),
         "password": fake.password(),
-        "experience_level": fake.enum(schemas.UserExperience),
-        "goal": fake.enum(schemas.UserGoal)
+        "experience_level": fake.enum(UserExperience),
+        "goal": fake.enum(UserGoal)
     }
 
     response = client.put(f"/users/{registered_user['email']}", json=updated_data, headers=headers)

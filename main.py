@@ -11,7 +11,7 @@ app.include_router(exercises_router)
 
 @app.on_event("startup")
 def startup_event():
-    from database import Base, engine
+    from core.database import Base, engine
     Base.metadata.create_all(bind=engine)
 
 

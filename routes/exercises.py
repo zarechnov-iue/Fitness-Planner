@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from database import get_db
-from models import Exercise
-from schemas import ExerciseCreate, ExerciseResponse
+from core.database import get_db
+from models.exercises import Exercise
+from schemas.exercises import ExerciseCreate, ExerciseResponse
 
 router = APIRouter(prefix="/exercises", tags=["Exercises"])
 

@@ -11,9 +11,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Импортируем из проекта
 from main import app
-from models import Base
-from database import get_db
-import schemas
+from core.database import get_db, Base
+from schemas.users import UserExperience, UserGoal
 
 # Используем in-memory SQLite для тестов
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
@@ -58,8 +57,8 @@ def registered_user(client):
         "name": fake.first_name() + " " + fake.last_name(),
         "email": fake.email(),
         "password": fake.password(),
-        "experience_level": fake.enum(schemas.UserExperience),
-        "goal": fake.enum(schemas.UserGoal)
+        "experience_level": fake.enum(UserExperience),
+        "goal": fake.enum(UserGoal)
     }
 
     response = client.post("/users", json=payload)
