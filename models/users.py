@@ -1,6 +1,7 @@
 import datetime
 
 from sqlalchemy import Column, Integer, String, Enum, DateTime
+from sqlalchemy.orm import relationship
 
 from core.database import Base
 
@@ -15,3 +16,5 @@ class User(Base):
     experience_level = Column(Enum('beginner', 'intermediate', 'advanced'), nullable=False)
     goal = Column(Enum('weight_loss', 'muscle_gain', 'endurance'), nullable=False)
     created_at = Column(DateTime, default=datetime.datetime.now)
+
+    workouts = relationship("Workout", back_populates="user")
