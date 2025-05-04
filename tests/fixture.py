@@ -13,12 +13,10 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from main import app
 from core.database import get_db, Base
 from schemas.users import UserExperience, UserGoal
-
-# Используем in-memory SQLite для тестов
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+from core.config import SQLALCHEMY_TEST_DATABASE_URL
 
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+    SQLALCHEMY_TEST_DATABASE_URL, connect_args={"check_same_thread": False}
 )
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -61,10 +59,8 @@ def registered_user(client):
         "goal": fake.enum(UserGoal)
     }
 
-    response = client.post("/users", json=payload)
+    response = client.post("auth/signup", json=payload)
     assert response.status_code == 201
 
-    # Добавляем токен в payload для удобства
-    # token = response.json()["access_token"]
-    payload["token"] = "token"
+    payload["token"] = response.headers["authorization"]
     return payload

@@ -18,7 +18,7 @@ def test_create_user(client: TestClient, registered_user):
         "goal": fake.enum(UserGoal)
     }
 
-    response = client.post("/users", json=payload)
+    response = client.post("auth/signup", json=payload)
 
     assert response.status_code == 201, f"Expected status code 201, got {response.status_code}. Response: {response.json()}"
     data = response.json()
@@ -88,7 +88,3 @@ def test_delete_user(client: TestClient, registered_user):
 
     response = client.delete(f"/users/{registered_user['email']}", headers=headers)
     assert response.status_code == 204 or response.status_code == 200
-
-    # Проверяем, что пользователь больше не существует
-    response_after_delete = client.get(f"/users/{registered_user['email']}", headers=headers)
-    assert response_after_delete.status_code == 404

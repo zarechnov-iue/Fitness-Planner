@@ -1,0 +1,5 @@
+SQLALCHEMY_DATABASE_URL = "sqlite:///./fitness.db"
+ACCESS_TOKEN_EXPIRE_MINUTES = 5
+SECRET_KEY = "your-secret-key"
+ALGORITHM = "HS256"
+SQLALCHEMY_TEST_DATABASE_URL = "sqlite:///./test.db"
